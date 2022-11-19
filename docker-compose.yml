@@ -1,0 +1,39 @@
+services:
+  dbc:
+    image: postgres:12
+    container_name: dbc
+    restart: always
+    expose:
+      - "5432"
+    environment:
+      - POSTGRES_DB=bd_factura
+      - POSTGRES_PASSWORD=gitcd
+      - POSTGRES_USER=gitcd
+    volumes:
+      - db-data:/var/lib/postgresql/data
+  spring:
+    image: 'faustoadockerid/spring:latest'
+    build:
+      context: venta
+      dockerfile: Dockerfile
+    expose:
+      - "8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://dbc:5432/bd_factura
+      - SPRING_DATASOURCE_USERNAME=gitcd
+      - SPRING_DATASOURCE_PASSWORD=gitcd
+    depends_on:
+      - dbc
+  angular:
+    image: 'faustoadockerid/angular:latest'
+    container_name: angular-service
+    build:
+      context: vista
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - spring
+volumes:
+  db-data:

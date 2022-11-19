@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h3>Personas</h3>
+    </div>
+    <div class="card-body">
+      <table class="table table-hover">
+        <thead class="text-center">
+          <tr>
+            <th>id</th>
+            <th>emisor</th>
+            <th>descripcion</th>
+            <th>fecha</th>
+            <th>valor</th>
+            <th>Acciones</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let factura of facturas" class="text-center">
+            <td>{{factura.id}}</td>
+            <td>{{factura.emisor}}</td>
+            <td>{{factura.descripcion}}</td>
+            <td>{{factura.fecha}}</td>
+            <td>{{factura.valor}}</td>
+            <td>
+              <button (click)="Editar(factura)" class="btn btn-warning" >Editar</button>
+              <button (click)="Delete(factura)" class="btn btn-danger">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
